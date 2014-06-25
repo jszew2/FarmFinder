@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+	//Example of how to use the metadata service.
+	metadata = "/rest/metadata"
+	$(document).ready(function(){
+		$.getJSON(metadata+"/farm", function(data){
+			console.log(data.title);
+			$.each(data.attributes, function(key, value){
+				//console.log(value.fieldName + " "+ value.fieldType) ;
+				if (value.fieldType == "String"){
+					$(".farm").append("<tr><td>" + value.fieldName + "</td><td> <input name='" + value.fieldName + "' type='text'/></td></tr>");
+				}
+				// Are going to change this to use rest service in order to use checkboxes. 
+				else if (value.fieldType == "ArrayList"){
+					$(".farm").append("<tr><td>" +value.fieldName + "</td><td><select class ='" + value.fieldName + "'></select></td></tr>")
+				}
+			}) ; //closes .each
+		}) ; //closes getJSON(metadata+"/farm")
+	}) //cloeses .ready()
+</script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+</head>
+<body>
+	<form class="farmform">
+		<table class="farm">
+			
+		</table>
+	</form>
+</body>
+</html>
