@@ -2,7 +2,7 @@ package com.farmfinder.model;
 
 import java.util.ArrayList;
 import org.codehaus.jackson.annotate.JsonIgnore;
-
+import org.springframework.data.annotation.Id  ;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
 /**
@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.annotate.JsonDeserialize;
  */
 
 public class Category {
-	private String Id;
+	@Id private String Id;
 	private String name ;
 	@JsonDeserialize(as=ArrayList.class, contentAs=String.class) private ArrayList<String> FarmID ;
 	

@@ -53,4 +53,18 @@ public class FarmFinder {
 		List<Category> categories = repo.findAll();											//returns a list
 		return Response.status(200).entity(categories).build();
 	}
+	
+	@POST
+	@Path("/createCategory{Name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response CreateCategory(@PathParam("Name") String Name){
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(MongoConfig.class); //get the application scope
+		CategoryRepo repo = (CategoryRepo) ctx.getBean(CategoryRepo.class) ;
+		Category category = new Category();
+		category.setName(Name);
+		repo.save(category);
+		return Response.status(201).entity(category).build();
+	}
+
+	
 }
