@@ -2,6 +2,7 @@ package com.farmfinder.services;
 
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -54,10 +55,11 @@ public class FarmFinder {
 		return Response.status(200).entity(categories).build();
 	}
 	
+	// rest service to create a farm category 
 	@POST
-	@Path("/createCategory{Name}")
+	@Path("/createCategory/{Name}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response CreateCategory(@PathParam("Name") String Name){
+	public Response createCategory(@PathParam("Name") String Name){
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(MongoConfig.class); //get the application scope
 		CategoryRepo repo = (CategoryRepo) ctx.getBean(CategoryRepo.class) ;
 		Category category = new Category();
@@ -65,6 +67,18 @@ public class FarmFinder {
 		repo.save(category);
 		return Response.status(201).entity(category).build();
 	}
-
+	
+	// rest service to delete a farm category 
+	@DELETE
+	@Path("/deleteCategory/{Id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteCategory(@PathParam("Id") String Id){
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(MongoConfig.class); //get the application scope
+		CategoryRepo repo = (CategoryRepo) ctx.getBean(CategoryRepo.class) ;
+		repo.delete(Id);
+		return Response.status(200).entity(Id).build();
+	}
+		
+	
 	
 }
